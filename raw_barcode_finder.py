@@ -11,5 +11,4 @@ from Levenshtein import distance
 
 def get_raw_barcodes(data, anchor):
     
-    
     return 1
