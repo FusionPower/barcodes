@@ -14,7 +14,7 @@ import random
 def get_random_anchor(anchor_len):
     nucleotides = ["A", "T", "C", "G"]
     anchor = ""
-    for i in range(anchor_len):
+    for _ in range(anchor_len):
         anchor += random.choice(nucleotides)
     return anchor
 
@@ -31,7 +31,7 @@ def get_test_sequences(barcode_len, unused_nucleotides, anchor_len, num_of_seque
     anchor = get_random_anchor(anchor_len)
 
     sequences = []
-    for i in range(num_of_sequences):
+    for _ in range(num_of_sequences):
         current_sequence = anchor
         
         # Mutate
@@ -44,7 +44,7 @@ def get_test_sequences(barcode_len, unused_nucleotides, anchor_len, num_of_seque
             elif anchor_mutation_type == "subsitute":
                 current_sequence = anchor[:shift_index] + random.choice(nucleotides) + anchor[shift_index+1:]
         
-        for j in range(sequence_size - len(current_sequence)):
+        for _ in range(sequence_size - len(current_sequence)):
             current_sequence = random.choice(nucleotides) + current_sequence
         sequences.append(current_sequence)
     return pd.DataFrame(sequences, columns=["seq"]), anchor
