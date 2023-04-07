@@ -31,6 +31,8 @@ def get_anchors(data, unused_nucleotides, anchor_len):
         ith_nucleotide_list = list(nucleotide_count.items())
         ith_nucleotide_list.sort(key=lambda x: x[1], reverse=True)
 
-        for i, (nucleotide, count) in enumerate(ith_nucleotide_list):
+        for i, (nucleotide, count) in enumerate(
+            ith_nucleotide_list
+        ):  # pylint: disable=unused-variable
             anchors[i] += nucleotide
     return anchors
