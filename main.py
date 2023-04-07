@@ -25,6 +25,6 @@ anchor_len = len(data.iloc[0].seq) - (seq_len + unused_nucleotides)
 
 anchors = get_anchors(data, unused_nucleotides, anchor_len)
 
-raw_barcodes = get_raw_barcodes(data, anchors)
+raw_barcodes = get_raw_barcodes()
 
 # shortened_barcode_list = get_shortened_barcodes

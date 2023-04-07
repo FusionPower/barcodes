@@ -15,16 +15,16 @@ def get_similarity(anchor, seq):
 
 
 def get_anchors(data, unused_nucleotides, anchor_len):
-
+    """
+    TODO: add stats on the anchor candidates
+    (closest values on most frequen value, and 2nd most frequent)
+    closest values on most frequent value and 3rd most frequent
+    """
     nucleotide_freq = [{"A": 0, "T": 0, "C": 0, "G": 0} for i in range(anchor_len)]
 
     for i, row in data.iterrows():
         for j, nucleotide in enumerate(row.seq[-anchor_len:]):
             nucleotide_freq[j][nucleotide] += 1
-
-    # TODO: add stats on the anchor candidates
-    # (closest values on most frequen value, and 2nd most frequent)
-    # closest values on most frequent value and 3rd most frequent
 
     anchors = ["" for i in range(4)]
     for nucleotide_count in nucleotide_freq:
