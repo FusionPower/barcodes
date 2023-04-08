@@ -19,7 +19,14 @@ def get_random_anchor(anchor_len):
     return anchor
 
 
-def get_test_sequences(barcode_len, unused_nucleotides, anchor_len, num_of_sequences, mutation_probability, anchor_mutation_type):
+def get_test_sequences(
+    barcode_len,
+    unused_nucleotides,
+    anchor_len,
+    num_of_sequences,
+    mutation_probability,
+    anchor_mutation_type,
+):
     """
     Generate random sequences to test if anchor_finder finds the correct anchor.
     
@@ -33,22 +40,32 @@ def get_test_sequences(barcode_len, unused_nucleotides, anchor_len, num_of_seque
     sequences = []
     for _ in range(num_of_sequences):
         current_sequence = anchor
-        
+
         # Mutate
-        while random.random() < mutation_probability and 0 < len(current_sequence) < sequence_size:
-            shift_index = random.randint(0, anchor_len-1)
+        while (
+            random.random() < mutation_probability
+            and 0 < len(current_sequence) < sequence_size
+        ):
+            shift_index = random.randint(0, anchor_len - 1)
             if anchor_mutation_type == "shift":
-                current_sequence = anchor[:shift_index] + random.choice(nucleotides) + anchor[shift_index:]
+                current_sequence = (
+                    anchor[:shift_index]
+                    + random.choice(nucleotides)
+                    + anchor[shift_index:]
+                )
             elif anchor_mutation_type == "delete":
-                current_sequence = anchor[:shift_index] + anchor[shift_index+1:]
+                current_sequence = anchor[:shift_index] + anchor[shift_index + 1 :]
             elif anchor_mutation_type == "subsitute":
-                current_sequence = anchor[:shift_index] + random.choice(nucleotides) + anchor[shift_index+1:]
-        
+                current_sequence = (
+                    anchor[:shift_index]
+                    + random.choice(nucleotides)
+                    + anchor[shift_index + 1 :]
+                )
+
         for _ in range(sequence_size - len(current_sequence)):
             current_sequence = random.choice(nucleotides) + current_sequence
         sequences.append(current_sequence)
     return pd.DataFrame(sequences, columns=["seq"]), anchor
-
 
 
 def test_anchor_finder(
@@ -65,10 +82,10 @@ def test_anchor_finder(
         anchor_len,
         num_of_sequences,
         mutation_anchor_probability,
-        anchor_mutation_type = "shift"
+        anchor_mutation_type="shift",
     )
     found_anchors = get_anchors(sequences, unused_nucleotides, anchor_len)
-    
+
     assert real_anchor == found_anchors[0]
 
     sequences, real_anchor = get_test_sequences(
@@ -77,20 +94,20 @@ def test_anchor_finder(
         anchor_len,
         num_of_sequences,
         mutation_anchor_probability,
-        anchor_mutation_type = "subtitute"
+        anchor_mutation_type="subtitute",
     )
     found_anchors = get_anchors(sequences, unused_nucleotides, anchor_len)
-    
+
     assert real_anchor == found_anchors[0]
-    
+
     sequences, real_anchor = get_test_sequences(
         barcode_len,
         unused_nucleotides,
         anchor_len,
         num_of_sequences,
         mutation_anchor_probability,
-        anchor_mutation_type = "delete"
+        anchor_mutation_type="delete",
     )
     found_anchors = get_anchors(sequences, unused_nucleotides, anchor_len)
-    
+
     assert real_anchor == found_anchors[0]
