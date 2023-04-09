@@ -65,20 +65,22 @@ def get_band_code(hashes, bit_hashing_depth):
 
 
 def get_LSH_buckets(min_hash_matrix, num_hashes, bit_hashing_depth):
+    """
+    TODO: move r to a more accesible function
+    """
     max_val = 2 ** bit_hashing_depth - 1
     a, b = random.randint(0, max_val), random.randint(0, max_val)
     r = 8
-    b = num_hashes // r
 
     buckets = {}
 
-    for barcode_hashes in min_hash_matrix:
+    for i,barcode_hashes in enumerate(min_hash_matrix):
         for j in range(0, num_hashes, r):
             band_code = get_band_code(barcode_hashes[j : j + r], bit_hashing_depth)
             bucket = hash_function(band_code, a, b)
             if bucket not in buckets:
                 buckets[bucket] = set()
-            buckets[bucket].add(bucket)
+            buckets[bucket].add(i)
     return buckets
 
 
@@ -109,12 +111,12 @@ def get_most_likely_barcode(barcode_indexes, raw_barcodes):
 
 
 def get_barcodes_from_buckets(buckets, raw_barcodes):
-    barcodes = []
+    barcodes = set()
 
     for _, barcode_indexes in buckets.items():
         if len(barcode_indexes) > 1:
             barcode = get_most_likely_barcode(barcode_indexes, raw_barcodes)
-            barcodes.append(barcode)
+            barcodes.add(barcode)
     return barcodes
 
 
@@ -124,11 +126,12 @@ def get_barcode_list(
 
     assert raw_barcodes, "raw_barcodes list must not be empty"
     assert math.log(num_hashes, 2).is_integer(), "num_hashes must be a power of 2"
-
+    
     barcode_shingles, shingles = get_seq_shingles(raw_barcodes, shingle_size)
     min_hash_matrix = get_min_hash_matrix(
         len(raw_barcodes), barcode_shingles, shingles, num_hashes, bit_hashing_depth
     )
+
     buckets = get_LSH_buckets(min_hash_matrix, num_hashes, bit_hashing_depth)
     barcodes = get_barcodes_from_buckets(buckets, raw_barcodes)
 

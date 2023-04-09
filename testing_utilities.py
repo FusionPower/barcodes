@@ -47,8 +47,8 @@ def get_test_sequences(
     anchor_len,
     num_of_sequences,
     mutation_probability,
-    mutation_type,
-    num_of_barcodes=5000,
+    num_of_barcodes,
+    mutation_type
 ):
     """
     Generate random sequences to test if anchor_finder finds the correct anchor.
