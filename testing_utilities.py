@@ -24,7 +24,9 @@ def mutate_seq(current_seq, mutation_type, nucleotides):
     mutation_index = random.randint(0, len(current_seq) - 1)
     if mutation_type == "add":
         current_seq = (
-            current_seq[:mutation_index] + random.choice(nucleotides) + current_seq[mutation_index:]
+            current_seq[:mutation_index]
+            + random.choice(nucleotides)
+            + current_seq[mutation_index:]
         )
     elif mutation_type == "delete":
         current_seq = current_seq[:mutation_index] + current_seq[mutation_index + 1 :]
@@ -64,34 +66,43 @@ def get_test_sequences(
     sequences = []
     for _ in range(num_of_sequences):
         current_anchor = np.random.choice(anchors, 1, p=anchor_probability)[0]
-        
+
         # Mutate
         while (
             random.random() < mutation_probability
             and 0 < len(current_anchor) < sequence_size
         ):
-            current_anchor = mutate_seq(
-                current_anchor, mutation_type, nucleotides
-            )
+            current_anchor = mutate_seq(current_anchor, mutation_type, nucleotides)
 
         current_barcode = random.choice(barcodes)
-        
+
         while (
             random.random() < mutation_probability
-            and 0 < len(current_barcode)+len(current_anchor) < sequence_size
+            and 0 < len(current_barcode) + len(current_anchor) < sequence_size
         ):
             current_barcode = mutate_seq(current_barcode, mutation_type, nucleotides)
-        
-        current_unused_nucleotides = "".join([random.choice(nucleotides) for _ in range(2)])
-        current_sequence = current_barcode + current_unused_nucleotides + current_anchor
-        
-        while len(current_sequence) > sequence_size:
-            del_nucleotide_i = random.randint(0,len(current_sequence)-1)
-            current_sequence = current_sequence[:del_nucleotide_i] + current_sequence[del_nucleotide_i+1:]
-        while len(current_sequence) < sequence_size:
-            del_nucleotide_i = random.randint(0,len(current_sequence)-1)
-            current_sequence = current_sequence[:del_nucleotide_i] + random.choice(nucleotides)+ current_sequence[del_nucleotide_i:]
 
-        assert len(current_sequence) == sequence_size, "incorrect sequence size produced"
+        current_unused_nucleotides = "".join(
+            [random.choice(nucleotides) for _ in range(2)]
+        )
+        current_sequence = current_barcode + current_unused_nucleotides + current_anchor
+
+        while len(current_sequence) > sequence_size:
+            del_nucleotide_i = random.randint(0, len(current_sequence) - 1)
+            current_sequence = (
+                current_sequence[:del_nucleotide_i]
+                + current_sequence[del_nucleotide_i + 1 :]
+            )
+        while len(current_sequence) < sequence_size:
+            del_nucleotide_i = random.randint(0, len(current_sequence) - 1)
+            current_sequence = (
+                current_sequence[:del_nucleotide_i]
+                + random.choice(nucleotides)
+                + current_sequence[del_nucleotide_i:]
+            )
+
+        assert (
+            len(current_sequence) == sequence_size
+        ), "incorrect sequence size produced"
         sequences.append(current_sequence)
     return pd.DataFrame(sequences, columns=["seq"]), anchors, barcodes

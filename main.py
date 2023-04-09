@@ -4,11 +4,16 @@
 Created on Tue Apr  4 11:14:17 2023
 
 @author: samuel
+
+Assumption:
+    sequences only include "A" "T" "G" or "C" nucleotides
+
 """
 
 import pandas as pd
 from anchor_finder import get_anchors
 from raw_barcode_finder import get_raw_barcodes
+from barcode_list_finder import get_barcode_list
 
 
 data = pd.DataFrame(
@@ -24,7 +29,5 @@ unused_nucleotides = 2
 anchor_len = len(data.iloc[0].seq) - (barcode_len + unused_nucleotides)
 
 anchors = get_anchors(data, unused_nucleotides, anchor_len)
-
 raw_barcodes = get_raw_barcodes(anchors, data, barcode_len)
-
-# shortened_barcode_list = get_shortened_barcodes
+barcode_list = get_barcode_list(raw_barcodes)

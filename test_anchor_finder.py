@@ -18,7 +18,7 @@ def test_anchor_finder(
     mutation_anchor_probability=0.2,
     num_of_anchors=4,
 ):
-    anchor_probability=[0.8, 0.1, 0.05, 0.05]
+    anchor_probability = [0.8, 0.1, 0.05, 0.05]
     assert (
         len(anchor_probability) == num_of_anchors
     ), "probability per anchor must match number of anchors"
@@ -36,7 +36,9 @@ def test_anchor_finder(
     )
 
     found_anchors = get_anchors(sequences, unused_nucleotides, anchor_len)
-    assert real_anchors[0] == found_anchors[0], "real anchor not found for mutation 'add'"
+    assert (
+        real_anchors[0] == found_anchors[0]
+    ), "real anchor not found for mutation 'add'"
 
     # Test substitute mutations
     sequences, real_anchors, _ = get_test_sequences(
@@ -50,7 +52,9 @@ def test_anchor_finder(
         mutation_type="subtitute",
     )
     found_anchors = get_anchors(sequences, unused_nucleotides, anchor_len)
-    assert real_anchors[0] == found_anchors[0], "real anchor not found for mutation 'substitute'"
+    assert (
+        real_anchors[0] == found_anchors[0]
+    ), "real anchor not found for mutation 'substitute'"
 
     # Teste delete mutations
     sequences, real_anchors, _ = get_test_sequences(
@@ -64,4 +68,6 @@ def test_anchor_finder(
         mutation_type="delete",
     )
     found_anchors = get_anchors(sequences, unused_nucleotides, anchor_len)
-    assert real_anchors[0] == found_anchors[0], "real anchor not found for mutation 'delete'"
+    assert (
+        real_anchors[0] == found_anchors[0]
+    ), "real anchor not found for mutation 'delete'"
