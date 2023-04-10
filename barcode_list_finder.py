@@ -74,7 +74,7 @@ def get_LSH_buckets(min_hash_matrix, num_hashes, bit_hashing_depth):
 
     buckets = {}
 
-    for i,barcode_hashes in enumerate(min_hash_matrix):
+    for i, barcode_hashes in enumerate(min_hash_matrix):
         for j in range(0, num_hashes, r):
             band_code = get_band_code(barcode_hashes[j : j + r], bit_hashing_depth)
             bucket = hash_function(band_code, a, b)
@@ -126,7 +126,7 @@ def get_barcode_list(
 
     assert raw_barcodes, "raw_barcodes list must not be empty"
     assert math.log(num_hashes, 2).is_integer(), "num_hashes must be a power of 2"
-    
+
     barcode_shingles, shingles = get_seq_shingles(raw_barcodes, shingle_size)
     min_hash_matrix = get_min_hash_matrix(
         len(raw_barcodes), barcode_shingles, shingles, num_hashes, bit_hashing_depth

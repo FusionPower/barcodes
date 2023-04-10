@@ -17,6 +17,7 @@ def test_anchor_finder(
     num_of_sequences=50000,
     mutation_anchor_probability=0.2,
     num_of_anchors=4,
+    num_of_barcodes=100,
 ):
     anchor_probability = [0.8, 0.1, 0.05, 0.05]
     assert (
@@ -32,6 +33,7 @@ def test_anchor_finder(
         anchor_len,
         num_of_sequences,
         mutation_anchor_probability,
+        num_of_barcodes,
         mutation_type="add",
     )
 
@@ -49,6 +51,7 @@ def test_anchor_finder(
         anchor_len,
         num_of_sequences,
         mutation_anchor_probability,
+        num_of_barcodes,
         mutation_type="subtitute",
     )
     found_anchors = get_anchors(sequences, unused_nucleotides, anchor_len)
@@ -65,6 +68,7 @@ def test_anchor_finder(
         anchor_len,
         num_of_sequences,
         mutation_anchor_probability,
+        num_of_barcodes,
         mutation_type="delete",
     )
     found_anchors = get_anchors(sequences, unused_nucleotides, anchor_len)
