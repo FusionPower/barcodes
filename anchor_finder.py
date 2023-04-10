@@ -7,34 +7,35 @@ Created on Wed Apr  5 08:35:33 2023
 """
 
 
-import Levenshtein
-
-
-def get_similarity(anchor, seq):
-    return Levenshtein.distance(anchor, seq[-len(anchor) :])
-
-
-def get_anchors(data, unused_nucleotides, anchor_len):
+def get_anchor(data, unused_nucleotides, anchor_len, anchor_similarity_threshold=0.8):
     """
-    TODO: add stats on the anchor candidates
-    (closest values on most frequen value, and 2nd most frequent)
-    closest values on most frequent value and 3rd most frequent
+    LOGIC:
+    Gets anchor by counting the most frequent nucleotide per position and concatenating them
     
-    if anchors are too close they are assumed to be mutations of the other anchor.
-    if they are infrequent, they are assumed to be mutations.
+    POSSIBLE IMPROVEMENTS:
+    This could be improved to getting up to 4 anchors in O(num_seq) * anchor_len:
+        - first get a rough estimate of the anchors by getting the most frequent nucleotides per position and grouping them by order
+        - group the sequences according to their jaccard similarity to each anchor candidate between shigles_sets of shingle size X
+        - recount the most common nucleotide for each group
+    
+    LIMITATIONS:
+        As multiple anchor probability distribution gets uniform, this algorithm crashes!
+        To solve this we could use the same algorithm used to extract barcodes but performance decreases
     """
+
     nucleotide_freq = [{"A": 0, "T": 0, "C": 0, "G": 0} for i in range(anchor_len)]
 
     for i, row in data.iterrows():
         for j, nucleotide in enumerate(row.seq[-anchor_len:]):
             nucleotide_freq[j][nucleotide] += 1
 
-    anchors = ["" for i in range(4)]
+    anchor = ""
     for nucleotide_count in nucleotide_freq:
-        ith_nucleotide_list = list(nucleotide_count.items())
-        ith_nucleotide_list.sort(key=lambda x: x[1], reverse=True)
-
-        for i, nucleotide in enumerate(ith_nucleotide_list):
-            anchors[i] += nucleotide[0]
-
-    return anchors
+        most_freq_nucleotide = ""
+        max_freq = 0
+        for nucleotide, count in nucleotide_count.items():
+            if count > max_freq:
+                max_freq = count
+                most_freq_nucleotide = nucleotide
+        anchor += most_freq_nucleotide
+    return anchor
