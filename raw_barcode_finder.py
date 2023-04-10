@@ -44,7 +44,7 @@ def is_valid_seq(
 ):
     """
     For a seq to have a valid barcode it must:
-        1. Have an anchor that starts at  index barcode_len+1 so there is no loss
+        1. Have an anchor that starts at  index barcode_len+unused_nucleotides_len+1 so there is no loss
            of barcode nucleotides. 
         2. Have an anchor at least "seq_anchor_similarity_threshold" similar to the actual anchor.
         3. Start with at least "min_identical_start" nucleotides. This improves

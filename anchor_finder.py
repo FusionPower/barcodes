@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Created on Wed Apr  5 08:35:33 2023
-
-@author: samuel
-"""
 
 
 def get_anchor(data, unused_nucleotides, anchor_len):

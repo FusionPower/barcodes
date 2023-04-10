@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Created on Sun Apr  9 05:18:11 2023
 
-@author: samuel
-"""
 
 import random
 import math
@@ -151,7 +147,7 @@ def get_barcode_list(
     num_hashes=128,
     bit_hashing_depth=32,
     LSH_rows_per_band=8,
-    sim_elements_threshold=2,
+    sim_elements_threshold=20,
 ):
 
     assert raw_barcodes, "raw_barcodes list must not be empty"

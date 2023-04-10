@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Created on Sat Apr  8 08:49:02 2023
 
-@author: samuel
-"""
 
 import numpy as np
 import random

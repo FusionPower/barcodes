@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Created on Sat Apr  8 08:46:19 2023
 
-@author: samuel
-"""
 
 
 from barcode_list_finder import get_barcode_list
@@ -16,10 +12,10 @@ def test_barcode_finder(
     barcode_len=30,
     unused_nucleotides=2,
     anchor_len=47,
-    num_of_sequences=10,
+    num_of_sequences=50000,
     mutation_probability=0.5,
     num_of_anchors=1,
-    num_of_barcodes=1,
+    num_of_barcodes=500,
 ):
 
     anchor_probability = [1]  # Probability distribution for anchors
@@ -27,7 +23,7 @@ def test_barcode_finder(
         len(anchor_probability) == num_of_anchors
     ), "probability per anchor must match number of anchors"
     assert num_of_anchors == 1, "num_of_anchors only supports size one anchor for how"
-
+    
     # TEST ADD MUTATIONS
     sequences, anchor, barcodes = get_test_sequences(
         num_of_anchors,
@@ -45,7 +41,6 @@ def test_barcode_finder(
     barcode_set = get_barcode_list(raw_barcodes)
 
     jaccard_similarity = len(barcode_set) / len(barcode_set.union(barcodes))
-    print(f"Jaccard_similarity = {jaccard_similarity}")
     assert jaccard_similarity > 0.95, "Original barcodes were not found"
 
     # TEST DELETE MUTATIONS
@@ -65,7 +60,6 @@ def test_barcode_finder(
     barcode_set = get_barcode_list(raw_barcodes)
 
     jaccard_similarity = len(barcode_set) / len(barcode_set.union(barcodes))
-    print(f"Jaccard_similarity = {jaccard_similarity}")
     assert jaccard_similarity > 0.95, "original barcodes were not found"
 
     # TEST SUBSTITUTE MUTATIONS
@@ -85,9 +79,8 @@ def test_barcode_finder(
     barcode_set = get_barcode_list(raw_barcodes)
 
     jaccard_similarity = len(barcode_set) / len(barcode_set.union(barcodes))
-    print(f"Jaccard_similarity = {jaccard_similarity}")
     assert jaccard_similarity > 0.95, "original barcodes were not found"
-
+    
     # TEST ANY MUTATION TYPE
     sequences, anchor, barcodes = get_test_sequences(
         num_of_anchors,
@@ -105,5 +98,4 @@ def test_barcode_finder(
     barcode_set = get_barcode_list(raw_barcodes)
 
     jaccard_similarity = len(barcode_set) / len(barcode_set.union(barcodes))
-    print(f"Jaccard_similarity = {jaccard_similarity}")
     assert jaccard_similarity > 0.95, "original barcodes were not found"

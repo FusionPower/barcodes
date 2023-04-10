@@ -3,3 +3,4 @@ pylint
 black
 pytest-cov
 pandas
+csv
