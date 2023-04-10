@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 
-
 from barcode_list_finder import get_barcode_list
 from raw_barcode_finder import get_raw_barcodes
 from testing_utilities import get_test_sequences
@@ -23,7 +22,7 @@ def test_barcode_finder(
         len(anchor_probability) == num_of_anchors
     ), "probability per anchor must match number of anchors"
     assert num_of_anchors == 1, "num_of_anchors only supports size one anchor for how"
-    
+
     # TEST ADD MUTATIONS
     sequences, anchor, barcodes = get_test_sequences(
         num_of_anchors,
@@ -80,7 +79,7 @@ def test_barcode_finder(
 
     jaccard_similarity = len(barcode_set) / len(barcode_set.union(barcodes))
     assert jaccard_similarity > 0.95, "original barcodes were not found"
-    
+
     # TEST ANY MUTATION TYPE
     sequences, anchor, barcodes = get_test_sequences(
         num_of_anchors,

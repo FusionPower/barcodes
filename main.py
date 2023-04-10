@@ -12,9 +12,7 @@ import csv
 file = input("Full full file address: ")
 
 data = pd.DataFrame(
-    pd.read_csv(
-        file, sep="\n", header=None
-    ).values.reshape(-1, 4),
+    pd.read_csv(file, sep="\n", header=None).values.reshape(-1, 4),
     columns=["read_id", "seq", "+", "qual"],
 )
 
@@ -28,9 +26,7 @@ raw_barcodes = get_raw_barcodes(anchor, data, barcode_len)
 barcode_set = get_barcode_list(raw_barcodes)
 
 
-
-with open('output.csv', 'w', newline='') as csvfile:
-    writer = csv.writer(csvfile, delimiter=',')
+with open("output.csv", "w", newline="") as csvfile:
+    writer = csv.writer(csvfile, delimiter=",")
     for element in barcode_set:
         writer.writerow([element])
-
