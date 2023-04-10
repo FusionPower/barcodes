@@ -41,7 +41,6 @@ def test_barcode_finder(
         mutation_type="add",
     )
 
-    
     raw_barcodes = get_raw_barcodes(anchor, sequences, barcode_len)
     barcode_set = get_barcode_list(raw_barcodes)
 

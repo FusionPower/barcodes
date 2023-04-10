@@ -16,7 +16,7 @@ Limitations: only supports 1 anchor, however it could be improved using
 """
 
 import pandas as pd
-from anchor_finder import get_anchors
+from anchor_finder import get_anchor
 from raw_barcode_finder import get_raw_barcodes
 from barcode_list_finder import get_barcode_list
 
@@ -33,6 +33,6 @@ barcode_len = 30
 unused_nucleotides = 2
 anchor_len = len(data.iloc[0].seq) - (barcode_len + unused_nucleotides)
 
-anchor = get_anchors(data, unused_nucleotides, anchor_len)
+anchor = get_anchor(data, unused_nucleotides, anchor_len)
 raw_barcodes = get_raw_barcodes(anchor, data, barcode_len)
 barcode_set = get_barcode_list(raw_barcodes)

@@ -7,7 +7,7 @@ Created on Wed Apr  5 08:35:33 2023
 """
 
 
-def get_anchor(data, unused_nucleotides, anchor_len, anchor_similarity_threshold=0.8):
+def get_anchor(data, unused_nucleotides, anchor_len):
     """
     LOGIC:
     Gets anchor by counting the most frequent nucleotide per position and concatenating them
@@ -25,7 +25,7 @@ def get_anchor(data, unused_nucleotides, anchor_len, anchor_similarity_threshold
 
     nucleotide_freq = [{"A": 0, "T": 0, "C": 0, "G": 0} for i in range(anchor_len)]
 
-    for i, row in data.iterrows():
+    for _, row in data.iterrows():
         for j, nucleotide in enumerate(row.seq[-anchor_len:]):
             nucleotide_freq[j][nucleotide] += 1
 
