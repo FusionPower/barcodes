@@ -1,6 +1,47 @@
-# barcodes
+# Barcodes
 
 [![Python application](https://github.com/FusionPower/barcodes/actions/workflows/python-app.yml/badge.svg)](https://github.com/FusionPower/barcodes/actions/workflows/python-app.yml)
 
 
-This is a project that gets barcodes of genome sequences.
+## Algorithm Description
+The main idea used to solve this problem is Local Sensitive Hashing with Min-
+hashing. The following explains the details of the implementation.
+### Main module
+The logic behind the main module is very straightforward:
+• Extract the sequences from the data
+• Retrieve the anchor with the”get anchor’ function
+• Use the retrieved anchor to get the raw barcodes from the sequences us-
+ing”get raw barcodes function’
+• Use retrieved raw barcodes to get the shortened list of barcodes.
+### Data Extraction
+The extraction was done with pandas and the data was assumed to be uncor-
+rupted. This means there is an iterative structure that follows the following
+order ”read id”, ”sequence”, ”+”, ”quality”. Deviations from this structure
+will cause faulty output or crashes.
+Module Time Complexity O(number of sequences * sequence length)
+## Anchor Finder module
+This module strives to take advantage of the fact that, most of the time, a
+single anchor is used to extract sequences. The module counts the most common
+nucleotide per anchor position. It is expected that a random mutation would
+yield anomalous sequences. However, the most common nucleotide per position
+would be a part of the original anchor transcription. The barcode length and
+the unused nucleotides between the barcode and the anchor give the first anchor
+position. It is worth noting that the most detrimental mutations for this module
+are shifts in the anchor since it means a lot less indexes of the true anchor will
+match with the anchor candidates. A justification for the validity of this strategy
+is explored in a later section.
+This module only finds one anchor; however it could be improved to get-
+ting up to four anchors in time complexity O(n*m) where n is the number of
+sequences and m is the anchor length. This improvement is only possible if the
+probability of each anchor is not uniform. As the probability of each anchor
+appearing gets closer, this idea fails to retrieve a valid anchor.
+If more than four anchors were needed the module logic would have to be
+changed and the same idea used to shorten the list of barcodes could be used
+to extract the anchors.
+Another improvement possibility could be to take into account the quality
+of the sequence and discard the nucleotides that have poorer quality.
+It is worth mentioning that if the anchor length is known for this data, this
+module could be bypassed, and the first barcode elements could be retrieved
+directly. This would only slightly decrease the raw barcodes’ quality but increase
+the performance.
+Module Time Complexity: O(anchor length * number of sequences)
