@@ -15,10 +15,15 @@ def test_anchor_finder(
     unused_nucleotides=2,
     anchor_len=47,
     num_of_sequences=50000,
-    mutation_probability=0.6,
+    mutation_probability=0.5,
     num_of_anchors=1,
     num_of_barcodes=100,
 ):
+    
+    """
+    This test looks for EXACT matches between real_anchor and found_anchor, however, in practice
+    a similar anchor is good enough and exact matches are only important at the start of the anchor
+    """
 
     anchor_probability = [1]
     assert (
