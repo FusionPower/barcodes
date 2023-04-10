@@ -19,7 +19,7 @@ def test_anchor_finder(
     num_of_anchors=1,
     num_of_barcodes=100,
 ):
-    
+
     """
     This test looks for EXACT matches between real_anchor and found_anchor, however, in practice
     a similar anchor is good enough and exact matches are only important at the start of the anchor
