@@ -26,7 +26,7 @@ raw_barcodes = get_raw_barcodes(anchor, data, barcode_len)
 barcode_set = get_barcode_list(raw_barcodes)
 
 
-with open("output.csv", "w", newline="") as csvfile:
+with open("output.csv", "w", newline="", encoding='utf-8') as csvfile:
     writer = csv.writer(csvfile, delimiter=",")
     for element in barcode_set:
         writer.writerow([element])
