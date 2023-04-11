@@ -216,7 +216,7 @@ barcode was be assesed against the true barcode. The following graph expresses
 the results. Each case was run for 20 iterations. A minimum of 20 barcodes per
 bucket is required, this less that 20 sequences is not worth testing.
 
-![alt text] (https://github.com/FusionPower/barcodes/blob/main/barcodes_needed.png?raw=true)
+![barcodes_needed](https://user-images.githubusercontent.com/54119843/231022672-0b6b9f7a-2a1a-444f-8f13-be25c14e967a.png)
 
 The barcode finder was also tested with 50,000 sequences produced from
 500 barcodes with a mutation probability of 0.5 which comes out to the rougly
