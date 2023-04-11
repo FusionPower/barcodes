@@ -45,3 +45,28 @@ module could be bypassed, and the first barcode elements could be retrieved
 directly. This would only slightly decrease the raw barcodes’ quality but increase
 the performance.
 Module Time Complexity: O(anchor length * number of sequences)
+
+### Raw Barcode Finder module
+To extract the raw barcodes from the anchor, the similarity between the se-
+quence at the anchor positions and the true anchor are obtained using the
+Jaccard Similarity, which is defined as:
+\[\frac{ |S_{1} \cap S_{2}| }{|S_{1} \cup S_{2}|}\]
+
+Each set is composed of shingles from the original sequence. Shingles are
+obtained by extracting all possible continuous substrings of size K from the
+original sequence at the anchor positions. Sets are compared, and a similarity
+threshold is used to discriminate between valid and non-valid anchor candidates.
+This way, anchor candidates that are similar to the real anchor are interpreted
+as valid anchors.
+After an anchor is found to be valid, the next thing to know is to find whether
+there are any shifts on the anchor such that the barcode starts at”shift’ positions
+from the 0th index. To do this, there must be an exact match between the real
+anchor’s first E elements and the anchor candidate’s first E elements. This
+is revised starting at the first position of the possible anchor start and then
+moved onward until an exact match is found. If the beginning of the anchor
+is corrupted, it is impossible to know if there was a shift that would make
+the raw barcode incomplete. There could be a mutation in the unused middle
+nucleotides, but there is no way to tell if those were mutated with additions or
+deletions since they don’t have a predefined value.
+Module Time Complexity: O(sequence length * number of sequences)
+
