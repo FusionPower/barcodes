@@ -50,7 +50,10 @@ Module Time Complexity: O(anchor length * number of sequences)
 To extract the raw barcodes from the anchor, the similarity between the se-
 quence at the anchor positions and the true anchor are obtained using the
 Jaccard Similarity, which is defined as:
-\[\frac{ |S_{1} \cap S_{2}| }{|S_{1} \cup S_{2}|}\]
+
+$$ |S 1 ∩ S 2 | |S 1 ∪ S 2 | $$
+
+
 
 Each set is composed of shingles from the original sequence. Shingles are
 obtained by extracting all possible continuous substrings of size K from the
