@@ -2,7 +2,6 @@
 
 [![Python application](https://github.com/FusionPower/barcodes/actions/workflows/python-app.yml/badge.svg)](https://github.com/FusionPower/barcodes/actions/workflows/python-app.yml)
 
-
 ## Algorithm Description
 The main idea used to solve this problem is Local Sensitive Hashing with Min-
 hashing. The following explains the details of the implementation.
